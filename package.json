@@ -4,8 +4,10 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node src/app.js",
-    "dev": "parcel src/index.html",
+    // "start": "node src/app.js",
+    // "dev": "parcel src/index.html",
+    "dev": "react-scripts start",
+    "start": "serve -s build",
     "build": "react-scripts build",
     "heroku-postbuild": "npm run build",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
@@ -40,7 +42,8 @@
   "dependencies": {
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "serve": "^13.0.2"
   },
   "browserslist": [
     "last 2 Chrome versions"
