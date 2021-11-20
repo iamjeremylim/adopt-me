@@ -4,12 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    // "start": "node src/app.js",
-    // "dev": "parcel src/index.html",
-    "dev": "react-scripts start",
-    "start": "serve -s build",
-    "build": "react-scripts build",
-    "heroku-postbuild": "npm run build",
+    "start": "node src/app.js",
+    "dev": "parcel src/index.html",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet"
   },
