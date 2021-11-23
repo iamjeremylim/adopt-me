@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 
-const Pet = ({ name, animal, breed, images, location, id }) => {
-  let hero = "http://pets-images.dev-apis.com/pets/none.jpg";
-  if (images.length) {
-    hero = images[0];
-  }
+const Pet = ({ name, type, breeds, photos, id, location }) => {
+  let hero;
+  if (photos.length) {
+    hero = photos[0].small;
+  } else hero = `https://source.unsplash.com/featured/?${type}`;
 
   return (
     <Link to={`/details/${id}`} className="pet">
@@ -13,10 +13,29 @@ const Pet = ({ name, animal, breed, images, location, id }) => {
       </div>
       <div className="info">
         <h1>{name}</h1>
-        <h2>{`${animal} - ${breed} - ${location}`}</h2>
+        <h2>{`${type} - ${breeds} - ${location}`}</h2>
       </div>
     </Link>
   );
 };
+
+// const Pet = ({ name, animal, breed, images, id, location }) => {
+//   let hero = "http://pets-images.dev-apis.com/pets/none.jpg";
+//   if (images.length) {
+//     hero = images[0];
+//   }
+
+//   return (
+//     <Link to={`/details/${id}`} className="pet">
+//       <div className="image-container">
+//         <img src={hero} alt={name} />
+//       </div>
+//       <div className="info">
+//         <h1>{name}</h1>
+//         <h2>{`${animal} - ${breed} - ${location}`}</h2>
+//       </div>
+//     </Link>
+//   );
+// };
 
 export default Pet;
