@@ -2,11 +2,13 @@ import { useState, useEffect, useContext } from "react";
 import ThemeContext from "./themeContext";
 import useBreedList from "./useBreedList";
 import Results from "./results";
+import pf from "./api";
 
-const ANIMALS = ["bird", "cat", "dog", "rabbit", "reptile"];
+
+const ANIMALS = ["Cat", "Dog", "Rabbit"];
 
 const SearchParams = () => {
-  const [location, setLocation] = useState("Seattle, WA");
+  // const [location, setLocation] = useState("Seattle, WA");
   const [animal, setAnimal] = useState("");
   const [breed, setBreed] = useState("");
   const [pets, setPets] = useState([]);
@@ -18,16 +20,24 @@ const SearchParams = () => {
   }, []); // include [] so that we only call requestPets() once
 
   async function requestPets() {
-    const res = await fetch(
-      `https://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`
-    );
-    const json = await res.json();
-    setPets(json.pets);
-  }
+    const searchData = {
+      type: animal,
+    };
 
-  function updateLocation(event) {
-    setLocation(event.target.value);
+    const res = await pf.animal.search(searchData);
+    const resData = await res.data.animals;
+    let petData = [];
+    await resData.map((pet) => {
+      if (pet.breeds.primary === breed) {
+        petData.push(pet);
+      }
+    });
+
+    setPets(petData);
   }
+  // function updateLocation(event) {
+  //   setLocation(event.target.value);
+  // }
 
   return (
     <div className="search-params">
@@ -37,7 +47,7 @@ const SearchParams = () => {
           requestPets();
         }}
       >
-        <label htmlFor="location">
+        {/* <label htmlFor="location">
           Location
           <input
             id="location"
@@ -46,7 +56,7 @@ const SearchParams = () => {
             value={location}
             placeholder="Location"
           />
-        </label>
+        </label> */}
         <label htmlFor="animal">
           Animal
           <select
@@ -83,13 +93,14 @@ const SearchParams = () => {
           Theme
           <select
             value={theme}
-            onChange={e => setTheme(e.target.value)}
-            onBlur={e => setTheme(e.target.value)}>
-              <option value="darkblue">Dark Blue</option>
-              <option value="peru">Peru</option>
-              <option value="chartreuse">Chartreuse</option>
-              <option value="mediumorchid">Medium Orchid</option>
-            </select>
+            onChange={(e) => setTheme(e.target.value)}
+            onBlur={(e) => setTheme(e.target.value)}
+          >
+            <option value="darkblue">Dark Blue</option>
+            <option value="peru">Peru</option>
+            <option value="chartreuse">Chartreuse</option>
+            <option value="mediumorchid">Medium Orchid</option>
+          </select>
         </label>
         <button style={{ backgroundColor: theme }}>Submit</button>
       </form>
